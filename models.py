@@ -10,6 +10,24 @@ def connect_db(app):
 
 bcrypt = Bcrypt()
 
+class Feedback(db.Model):
+    __tablename__ = 'feedback'
+    def __repr__(self):
+        t = self
+        return f"{t.id} {t.title} {t.content} {t.username}"
+    
+    id = db.Column(db.Integer,
+                   primary_key=True,
+                   autoincrement=True)
+    title = db.Column(db.String(100),
+                      nullable=False)
+    content = db.Column(db.Text,
+                        nullable=False)
+    username = db.Column(db.String(20),
+                         db.ForeignKey('users.username'))
+    
+    user = db.relationship('User', backref="feedbacks")
+
 class User(db.Model):
     __tablename__ = 'users'
     def __repr__(self):

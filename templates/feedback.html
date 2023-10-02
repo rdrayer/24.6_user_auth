@@ -3,4 +3,36 @@
 {% block content %}
 <h1>Feedbaaaaack</h1>
 
+
+<form method="POST">
+    {{ form.hidden_tag() }}
+
+    {% for field in form 
+        if field.widget.input_type != 'hidden' %}
+
+    <p>
+        {{ field.label }}
+        {{ field(class="form-control") }}
+
+        {% for error in field.errors %}
+        <p class="form-text text-danger">{{ error }}</p>
+        {% endfor %}
+
+    </p>
+    {% endfor %}
+    <button class="btn btn-success" type="submit">Submit</button>
+</form>
+
+<ul>
+    {% for feedback in feedbacks %}
+    <li>{{ feedback.user.username }} - {{ feedback.title }}</li>
+    {% if session['username'] == feedback.username %}
+    <form style="display:inline;" action="/feedback/{{feedback.id}}" method="POST">
+        <button class="btn btn-sm btn-danger">X</button>
+    </form>
+    {% endif %}
+    {% endfor %}
+</ul>
+
+
 {% endblock %}

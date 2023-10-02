@@ -13,15 +13,14 @@
  
     {% for field in form 
         if field.widget.input_type != 'hidden' %}
+        <p>
+            {{ field.label }}
+            {{ field(class="form-control") }}
 
-    <p>
-        {{ field.label }}
-        {{ field(class="form-control") }}
-
-        {% for error in field.errors %}
-        <p class="form-text text-danger">{{ error }}</p>
-        {% endfor %}
-    </p>
+            {% for error in field.errors %}
+            <span class="form-text text-danger">{{ error }}</span>
+            {% endfor %}
+        </p>
     {% endfor %}
 
     <button type="submit">Login</button>

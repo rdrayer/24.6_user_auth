@@ -7,11 +7,37 @@
     <title>{% block title %} Home Page {% endblock %}</title>
 </head>
 <body>
+    <nav class="navbar navbar-light bg-primary justify-content-between">
+        <div class="container">
+            <a href="/" class="navbar-brand text-light">Auth Demo</a>
+            <ul class="nav navbar-nav flex-row float-right">
+                {% if session['username'] %}
+                <li class="nav-item">
+                    <a class="nav-link pr-3 text-light" href="/logout">Logout</a>
+                </li>
+                {% else %}
+                <li class="nav-item">
+                    <a class="nav-link pr-3 text-light" href="/login">Login</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link text-light" href="/register">Sign up</a>
+                </li>
+                {% endif %}
+            </ul>
+
+        </div>
+    </nav>
 
     <div class="container">
-        {% for msg in get_flashed_messages() %}
-        <div class="alert"></div>
-        {% endfor %}
+        {% with messages = get_flashed_messages() %}
+            {% if messages %}
+            <ul class="flashes">
+                {% for message in messages %}
+                <li>{{ message }}</li>
+                {% endfor %}
+            </ul>
+            {% endif %}
+        {% endwith %}
 
         {% block content %}
 
